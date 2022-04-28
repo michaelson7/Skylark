@@ -51,6 +51,7 @@ class _ServiceListState extends State<ServiceList> {
     return Scaffold(
       appBar: customeAppBar(
         title: title,
+        context: context,
       ),
       body: isLoading
           ? Center(child: const CircularProgressIndicator())

@@ -26,7 +26,10 @@ class _RegistrationActivityState extends State<RegistrationActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customeAppBar(title: "Registration"),
+      appBar: customeAppBar(
+        title: "Registration",
+        context: context,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: buildColumn(context),

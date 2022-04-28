@@ -33,6 +33,7 @@ class _HomeActivityState extends State<HomeActivity> {
     return Scaffold(
       appBar: customeAppBar(
         title: "Home",
+        context: context,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

@@ -25,7 +25,10 @@ class _PaymentCompleteActivityState extends State<PaymentCompleteActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customeAppBar(title: "Confirmation"),
+      appBar: customeAppBar(
+        title: "Confirmation",
+        context: context,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

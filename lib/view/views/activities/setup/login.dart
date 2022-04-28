@@ -32,7 +32,10 @@ class _LoginActivityState extends State<LoginActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customeAppBar(title: "Login"),
+      appBar: customeAppBar(
+        title: "Login",
+        context: context,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: buildColumn(context),
