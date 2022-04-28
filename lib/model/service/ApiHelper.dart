@@ -3,6 +3,7 @@ import 'package:skylark/model/core/ModelsModel.dart';
 import 'package:skylark/model/core/ServicesModel.dart';
 import 'package:skylark/model/core/UsersModel.dart';
 import '../../view/widgets/loggerWidget.dart';
+import '../core/LocationModel.dart';
 import '../core/LoginResponseModel.dart';
 import '../core/UpdateMpinModelObj.dart';
 import '../core/globalResponseModel.dart';
@@ -32,6 +33,27 @@ class ApiHelper {
     }
   }
 
+  Future<GlobalResponseModel?> bookingsDelete({
+    bool showResponse = false,
+    required int id,
+  }) async {
+    try {
+      GlobalResponseModel response;
+      var jsonResponse = await api.bookingDelete(
+        id: id,
+        showResponse: showResponse,
+      );
+      response = GlobalResponseModel.fromJson(jsonResponse);
+      displayJsonInLogger(
+        shouldDisplayInLogger: showResponse,
+        jsonFile: response.toJson().toString(),
+      );
+      return response;
+    } catch (e) {
+      throw Exception(getError(e, 'bookingsDelete'));
+    }
+  }
+
   Future<BookingModel> bookingsGetAll({bool showResponse = false}) async {
     try {
       BookingModel response;
@@ -47,6 +69,45 @@ class ApiHelper {
       return response;
     } catch (e) {
       throw Exception(getError(e, 'getAllBookings'));
+    }
+  }
+
+  Future<LocationModel> locationGetAll({bool showResponse = false}) async {
+    try {
+      LocationModel response;
+      var jsonResponse = await api.dynamicGetAll(
+        endpoint: "getAllLocation",
+        showResponse: showResponse,
+      );
+      response = LocationModel.fromJson(jsonResponse);
+      displayJsonInLogger(
+        shouldDisplayInLogger: showResponse,
+        jsonFile: response.toJson().toString(),
+      );
+      return response;
+    } catch (e) {
+      throw Exception(getError(e, 'locationGetAll'));
+    }
+  }
+
+  Future<BookingModel> bookingGetByID({
+    bool showResponse = false,
+    required int userID,
+  }) async {
+    try {
+      BookingModel response;
+      var jsonResponse = await api.bookingGetByID(
+        userId: userID,
+        showResponse: showResponse,
+      );
+      response = BookingModel.fromJson(jsonResponse);
+      displayJsonInLogger(
+        shouldDisplayInLogger: showResponse,
+        jsonFile: response.toJson().toString(),
+      );
+      return response;
+    } catch (e) {
+      throw Exception(getError(e, 'bookingGetByID'));
     }
   }
 

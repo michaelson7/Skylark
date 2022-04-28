@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:skylark/view/constants/constants.dart';
 import 'package:skylark/view/widgets/customeAppBar.dart';
 
+import '../../fragments/Bookings.dart';
 import '../../fragments/homeFragment.dart';
 import '../../fragments/templateFragment.dart';
 
@@ -17,7 +19,7 @@ class _HomeActivityState extends State<HomeActivity> {
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const HomeFragment(),
-    const TemplateFragment(),
+    const BookingFragment(),
   ];
 
   void _onItemTapped(int index) {
@@ -40,8 +42,8 @@ class _HomeActivityState extends State<HomeActivity> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(FontAwesome5Solid.calendar),
+            label: 'My Bookings',
           ),
         ],
         currentIndex: _selectedIndex,

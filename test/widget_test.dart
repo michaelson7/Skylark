@@ -11,12 +11,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:skylark/main.dart';
 import 'package:skylark/model/core/UsersModel.dart';
 import 'package:skylark/provider/BookingProvider.dart';
+import 'package:skylark/provider/LocationProvider.dart';
 import 'package:skylark/provider/UsersProvider.dart';
 
 void main() {
   test("bookingGetAll", () async {
     var provider = BookingProvider();
     var result = await provider.bookingsGetAll(showResponse: true);
+  });
+
+  test("bookingGetByID", () async {
+    var provider = BookingProvider();
+    var result = await provider.bookingGetByID(showResponse: true, userID: 6);
+  });
+
+  test("locationGetAll", () async {
+    var provider = LocationProvider();
+    var result = await provider.locationGetAll(showResponse: true);
   });
 
   test("loginUser", () async {

@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:skylark/model/core/BookingModel.dart';
 import 'package:skylark/model/service/dataAccess.dart';
-
 import '../../view/widgets/loggerWidget.dart';
 import '../core/UsersModel.dart';
 
-String baseUrl = "192.168.43.63:3090";
-String imageLink = "http://192.168.43.63:3069/Images/";
+String baseUrl = "192.168.43.90:3090";
+String imageLink = "http://192.168.43.90:3069/Images/";
 
 class Api {
   //Bookings
@@ -27,6 +25,32 @@ class Api {
       Uri: uri.toString(),
     );
     return await postResponse(uri, body);
+  }
+
+  Future<dynamic> bookingGetByID(
+      {bool showResponse = false, required int userId}) async {
+    var urlPath = '/getAllBookingsById';
+    final requestParameters = {"userId": userId.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: showResponse,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
+  }
+
+  Future<dynamic> bookingDelete({
+    bool showResponse = false,
+    required int id,
+  }) async {
+    var urlPath = '/deleteBookings';
+    final requestParameters = {"id": id.toString()};
+    Uri uri = Uri.http(baseUrl, urlPath, requestParameters);
+    displayUriInLogger(
+      shouldDisplayInLogger: showResponse,
+      Uri: uri.toString(),
+    );
+    return await getResponse(uri);
   }
 
   //Users

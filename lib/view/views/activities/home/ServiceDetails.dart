@@ -1,12 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:skylark/view/constants/constants.dart';
 import 'package:skylark/view/widgets/loggerWidget.dart';
 import 'package:skylark/view/widgets/toast.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../../model/core/BookingModel.dart';
+import '../../../../model/core/LocationModel.dart';
 import '../../../../provider/BookingProvider.dart';
+import '../../../../provider/LocationProvider.dart';
+import '../../../widgets/mapMarkers.dart';
 import '../../../widgets/meetings.dart';
 import 'Confirmation.dart';
 
@@ -35,8 +40,10 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   String title, imagePath, serviceId, aboutService, cost;
   var bookingProvider = BookingProvider();
   final List<Meeting> meetings = <Meeting>[];
+  var LocationProviders = LocationProvider();
   BookingModel? bookingModel;
   bool isLoading = true;
+  LocationModel? locationModel;
   _ServiceDetailsState(
     this.title,
     this.imagePath,
@@ -53,12 +60,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
   void getData() async {
     var data = await bookingProvider.bookingsGetAll();
+    var result = await LocationProviders.locationGetAll();
+
     for (var dataValue in data!.results!) {
       final DateTime date = dataValue.bookingDate!;
       final DateTime today = DateTime(date.year, date.month, date.day);
       final DateTime startTime = DateTime(today.year, today.month, today.day);
       final DateTime endTime = startTime.add(const Duration(hours: 2));
       setState(() {
+        locationModel = result;
         meetings.add(Meeting(
           'BOOKED',
           startTime,
@@ -123,6 +133,10 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   Text("About Service", style: kTextStyleHeader2),
                   SizedBox(height: 10),
                   Text(aboutService, style: kTextStyleHint),
+                  SizedBox(height: 20),
+                  Text("Location Center", style: kTextStyleHeader2),
+                  SizedBox(height: 10),
+                  locationMap(),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,5 +242,42 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         ),
       );
     }
+  }
+
+  locationMap() {
+    return SizedBox(
+      height: 300,
+      child: FlutterMap(
+        options: MapOptions(
+          center: LatLng(
+            double.parse(locationModel?.results.first.latitude ?? ""),
+            double.parse(locationModel?.results.first.longitude ?? ""),
+          ),
+          zoom: 13.0,
+        ),
+        layers: [
+          TileLayerOptions(
+            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            subdomains: ['a', 'b', 'c'],
+            attributionBuilder: (_) {
+              return Text("© OpenStreetMap contributors");
+            },
+          ),
+          MarkerLayerOptions(
+            markers: [
+              mapMarkers(
+                latitude: double.parse(
+                  locationModel?.results.first.latitude ?? "",
+                ),
+                longitude: double.parse(
+                  locationModel?.results.first.longitude ?? "",
+                ),
+                title: locationModel?.results.first.title ?? "",
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
