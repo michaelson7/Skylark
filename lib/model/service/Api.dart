@@ -4,8 +4,8 @@ import 'package:skylark/model/service/dataAccess.dart';
 import '../../view/widgets/loggerWidget.dart';
 import '../core/UsersModel.dart';
 
-String baseUrl = "192.168.43.90:3090";
-String imageLink = "http://192.168.43.90:3069/Images/";
+String baseUrl = "192.168.43.63:3090";
+String imageLink = "http://192.168.43.63:3069/Images/";
 
 class Api {
   //Bookings

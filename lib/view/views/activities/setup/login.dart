@@ -6,7 +6,6 @@ import 'package:skylark/view/constants/constants.dart';
 import 'package:skylark/view/views/activities/home/HomeActivity.dart';
 import 'package:skylark/view/views/activities/setup/RegistrationActivity.dart';
 import 'package:skylark/view/widgets/toast.dart';
-
 import '../../../widgets/customeAppBar.dart';
 import '../../../widgets/dialogs.dart';
 

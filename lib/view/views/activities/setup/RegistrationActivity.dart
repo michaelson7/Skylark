@@ -105,7 +105,7 @@ class _RegistrationActivityState extends State<RegistrationActivity> {
       PopUpDialog dialog = PopUpDialog(context: context);
       dialog.showLoadingAnimation(context: context);
       //
-      var result = await provider.usersLogin(
+      var result = await provider.usersCreate(
         model: UsersModel(
           id: 0,
           names: nameController.text,
